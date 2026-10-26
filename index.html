@@ -50,7 +50,10 @@ h1{margin:0;font-size:clamp(30px,9vw,40px);line-height:1;font-weight:400;color:v
 header,.statusbar{width:calc(var(--c) * 6 + 8px);max-width:100%;margin:0 auto}
 header{align-items:center}
 header h1{white-space:nowrap;font-size:clamp(24px, calc(var(--c) * .62), 36px)}
-.hud .iconbtn{width:44px;height:44px}
+.statusbar .hud{margin-left:auto;align-self:center;display:flex;gap:6px;flex-shrink:0}
+.hud .iconbtn{width:40px;height:40px;box-shadow:2px 2px 0 var(--ink)}
+.hud .iconbtn svg{width:22px;height:22px}
+header{justify-content:center}
 .statusbar{display:flex;align-items:flex-start;gap:8px;padding:6px 10px 8px}
 .st{min-width:0;flex-shrink:0}
 .st small{display:block;font-size:12px;line-height:1.25;color:#4b4b5a;white-space:nowrap}
@@ -62,7 +65,8 @@ header h1{white-space:nowrap;font-size:clamp(24px, calc(var(--c) * .62), 36px)}
 .heart.off path{fill:#ddd6c4}
 .heart.lose{animation:heartlose .7s ease-out}
 @keyframes heartlose{0%{transform:scale(1)}30%{transform:scale(1.6) rotate(-15deg)}60%{transform:scale(.85) rotate(10deg)}100%{transform:none}}
-.lv-st{flex:1 1 auto;flex-shrink:1;min-width:0}
+.lv-st{flex:1 1 auto;flex-shrink:1;min-width:54px}
+.statusbar{width:max(calc(var(--c) * 6 + 8px), 460px)}
 .lv-st .junkrow{font-size:10px;white-space:nowrap;margin-top:4px}
 .lv-st small b{font-weight:400;font-size:14px;color:var(--ink);margin-left:2px}
 .lv-st .bar{margin-top:5px}
@@ -268,9 +272,14 @@ header h1{white-space:nowrap;font-size:clamp(24px, calc(var(--c) * .62), 36px)}
 .settings .toggle{min-width:130px}
 /* 좁은 화면(휴대폰 세로): 정보 칸을 판 위 한 줄로, 판은 폭을 거의 다 씀 */
 @media (max-width:600px){
-  :root{--c:max(26px, min(66px, calc((100vw - 44px) / 6), calc((var(--vh) - 262px) / 9)))}
-  .stage{padding-block:12px 16px}
-  .app{gap:10px}
+  :root{--c:max(26px, min(66px, calc((100vw - 40px) / 6), calc((var(--vh) - 158px) / 9)))}
+  header{display:none}
+  .statusbar{width:100%}
+  .statusbar{gap:6px;padding:5px 8px 6px}
+  .hud .iconbtn{width:36px;height:36px}
+  .hud{gap:5px}
+  .stage{padding-block:8px 10px}
+  .app{gap:8px}
   h1{font-size:clamp(24px,7vw,34px);white-space:nowrap}
   .tag{display:none}
   header{align-items:center}
@@ -292,7 +301,7 @@ header h1{white-space:nowrap;font-size:clamp(24px, calc(var(--c) * .62), 36px)}
   .bird{width:46px;height:57px;margin:0;flex-shrink:0}
   .bubble{min-height:0;font-size:13px;padding:5px 8px}
   .bubble::after{left:-8px;top:50%;bottom:auto;transform:translateY(-50%) rotate(135deg)}
-  .cbtn{width:60px;height:60px}
+  .cbtn{width:54px;height:54px}
   .ctrls{gap:14px}
 }
 @media (prefers-reduced-motion:reduce){
@@ -311,16 +320,16 @@ header h1{white-space:nowrap;font-size:clamp(24px, calc(var(--c) * .62), 36px)}
   <main class="app" id="app">
     <header>
       <h1>음표 테트리스</h1>
-      <div class="hud">
-        <button type="button" class="card iconbtn" id="btnHelp" aria-label="게임 설명"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M13 14 C13 6 27 6 27 14 C27 20 20 20 20 26" stroke="#111" stroke-width="4.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="33" r="3" fill="#111"/></svg></button>
-        <button type="button" class="card iconbtn" id="btnPause" aria-label="잠깐 멈추기"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M14 9 V31 M26 9 V31" stroke="#111" stroke-width="5" stroke-linecap="round"/></svg></button>
-      </div>
     </header>
     <div class="card statusbar">
       <div class="st score" id="scoreCard" aria-live="polite"><small>점수</small><b id="score">0</b></div>
       <div class="st"><small>하트</small><div class="hearts" id="hearts" role="img" aria-label="하트 3개"></div></div>
       <div class="st lv-st"><small>레벨 <b id="level">1</b></small><div class="bar"><i id="lvbar"></i></div><div class="junkrow" id="junkrow" hidden>줄 올라옴 <b id="junkleft">9</b></div></div>
       <div class="st next-st"><small>다음</small><div id="next"></div></div>
+      <div class="hud">
+        <button type="button" class="card iconbtn" id="btnHelp" aria-label="게임 설명"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M13 14 C13 6 27 6 27 14 C27 20 20 20 20 26" stroke="#111" stroke-width="4.5" stroke-linecap="round" fill="none"/><circle cx="20" cy="33" r="3" fill="#111"/></svg></button>
+        <button type="button" class="card iconbtn" id="btnPause" aria-label="잠깐 멈추기"><svg viewBox="0 0 40 40" aria-hidden="true"><path d="M14 9 V31 M26 9 V31" stroke="#111" stroke-width="5" stroke-linecap="round"/></svg></button>
+      </div>
     </div>
 
     <section class="playrow" id="playrow">
